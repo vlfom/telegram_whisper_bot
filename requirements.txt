@@ -1,0 +1,4 @@
+python-dotenv
+python-telegram-bot==20.0a4
+git+https://github.com/openai/whisper.git
+jiwer
