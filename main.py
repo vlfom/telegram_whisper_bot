@@ -61,7 +61,7 @@ async def response_voice(update: Update, context: CallbackContext):
     file_name = '%s_%s%s.ogg' % (chat_id, update.message.from_user.id, update.message.message_id)
     await download_and_prep(file_name, message)
 
-    transcription = transcribe(file_name, BOT_STATE["whisper_mode"])
+    transcription = await transcribe(file_name, BOT_STATE["whisper_mode"])
 
     logging.info("Received transcription:" + transcription)
 

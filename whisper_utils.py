@@ -11,7 +11,7 @@ def start_whisper():
     whisper_state["model"] = whisper.load_model(MODEL_SIZE)
 
 
-def transcribe(file_name, mode):
+async def transcribe(file_name, mode):
     model = whisper_state["model"]
     result = model.transcribe(file_name, task=mode)
 
