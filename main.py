@@ -1,4 +1,5 @@
 import os
+import time
 import logging
 
 from whisper_utils import start_whisper, transcribe
@@ -47,6 +48,10 @@ async def response_non_voice(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
 
 async def response_voice(update: Update, context: CallbackContext):
+    logging.info("Received request. Processing..")
+
+    start_time = time.time()
+
     message = update.effective_message
     if message.voice.duration > AUDIO_LEN_LIMIT_SEC:
         message.reply_text(AUDIO_LEN_LIMIT_MSG, quote=True)
@@ -67,6 +72,8 @@ async def response_voice(update: Update, context: CallbackContext):
     await reply_long_message(message, transcription)
 
     delete_file(file_name)
+
+    logging.info("Finished processing request. Time took: %s seconds" % (time.time() - start_time))
 
 
 async def reply_long_message(message, transcription):
@@ -129,6 +136,8 @@ if __name__ == '__main__':
     voice_handler = MessageHandler(filters.VOICE, response_voice)
 
     application.add_handler(start_handler)
+    application.add_handler(transcribe_handler)
+    application.add_handler(translate_handler)
     application.add_handler(non_voice_handler)
     application.add_handler(voice_handler)
 
