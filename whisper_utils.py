@@ -1,6 +1,6 @@
 import whisper
 
-MODEL_SIZE = "medium"
+MODEL_SIZE = "large"
 
 whisper_state = dict(
     model=None
